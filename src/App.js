@@ -1,17 +1,22 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { createStore } from 'redux';
-import allReducers from './reducers';
-
-const store = createStore(
-  allReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // extension追加
-);
+import { decrement, increment, login } from './actions';
 
 function App() {
+  const counter = useSelector((state) => state.counter);
+
+  const isLogin = useSelector((state) => state.isLogin);
+
+  const dispatch = useDispatch();
+
   return (
     <div className="App">
       <h1>Hello Redux</h1>
+      <h3>カウント：{counter}</h3>
+      <button onClick={() => dispatch(increment(7))}>＋</button>
+      <button onClick={() => dispatch(decrement())}>ー</button>
+      {isLogin ? <h3>ログイン成功！</h3> : <h3>ログインしてください</h3>}
+      <button onClick={() => dispatch(login())}>ログインorログアウト</button>
     </div>
   );
 }
